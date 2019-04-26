@@ -18,6 +18,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.wzy.opengl.R;
+import com.wzy.opengl.shape.Circle;
+import com.wzy.opengl.shape.Cube;
 import com.wzy.opengl.shape.IsoTriangleColorFull;
 import com.wzy.opengl.shape.Square;
 import com.wzy.opengl.shape.Triangle;
@@ -62,12 +64,12 @@ public class ChooseActivity extends AppCompatActivity {
     private void initData(){
         mData=new ArrayList<>();
         add("三角形", Triangle.class);
-        add("正方形", Square.class);
         add("彩色等腰直角三角形", IsoTriangleColorFull.class);
+        add("正方形", Square.class);
+        add("圆形", Circle.class);
+        add("正方体", Cube.class);
 //        add("正三角形", TriangleWithCamera.class);
 //        add("彩色三角形", TriangleColorFull.class);
-//        add("圆形", Oval.class);
-//        add("正方体", Cube.class);
 //        add("圆锥", Cone.class);
 //        add("圆柱", Cylinder.class);
 //        add("球体", Ball.class);

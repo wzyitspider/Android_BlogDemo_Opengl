@@ -12,7 +12,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/mChange"
             android:onClick="onClick"
-            android:text="切换图形" />
+            android:text="切换" />
     </LinearLayout>
     <com.wzy.opengl.view.MyGLSurfaceView
         android:layout_width="match_parent"
