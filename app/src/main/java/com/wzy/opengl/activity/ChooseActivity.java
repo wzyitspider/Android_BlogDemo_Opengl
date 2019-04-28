@@ -25,6 +25,7 @@ import com.wzy.opengl.shape.Cube;
 import com.wzy.opengl.shape.Cylinder;
 import com.wzy.opengl.shape.IsoTriangleColorFull;
 import com.wzy.opengl.shape.Square;
+import com.wzy.opengl.shape.Texture;
 import com.wzy.opengl.shape.Triangle;
 
 import java.util.ArrayList;
@@ -74,6 +75,7 @@ public class ChooseActivity extends AppCompatActivity {
         add("圆锥", Cone.class);
         add("圆柱", Cylinder.class);
         add("球体", Ball.class);
+        add("纹理贴图", Texture.class);
 //        add("圆柱", Cylinder.class);
 //        add("球体", Ball.class);
 //        add("带光源的球体",BallWithLight.class);
