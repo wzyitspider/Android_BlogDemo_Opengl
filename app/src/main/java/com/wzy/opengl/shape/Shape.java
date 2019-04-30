@@ -1,34 +1,22 @@
 package com.wzy.opengl.shape;
 
+import android.content.res.Resources;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.util.Log;
 import android.view.View;
+
+import java.io.InputStream;
 
 /**
  * Description:
  */
 public abstract class Shape implements GLSurfaceView.Renderer {
 
+    private static final String TAG="Shape";
+
     public Shape(){
 
-    }
-
-    public  int loadShader(final String strSource, final int iType) {
-        int[] compiled = new int[1];
-        //创建指定类型的着色器
-        int iShader = GLES20.glCreateShader(iType);
-        //将源码添加到iShader并编译它
-        GLES20.glShaderSource(iShader, strSource);
-        GLES20.glCompileShader(iShader);
-        //获取编译后着色器句柄存在在compiled数组容器中
-        GLES20.glGetShaderiv(iShader, GLES20.GL_COMPILE_STATUS, compiled, 0);
-        //容错判断
-        if (compiled[0] == 0) {
-            Log.d("Load Shader Failed", "Compilation\n" + GLES20.glGetShaderInfoLog(iShader));
-            return 0;
-        }
-        return iShader;
     }
 
     public  int loadProgram(final String strVSource, final String strFSource) {
@@ -67,6 +55,44 @@ public abstract class Shape implements GLSurfaceView.Renderer {
         GLES20.glDeleteShader(iFShader);
         return iProgId;
     }
+
+
+    public  int loadShader( final String strSource,final int iType) {
+        int[] compiled = new int[1];
+        //创建指定类型的着色器
+        int iShader = GLES20.glCreateShader(iType);
+        //将源码添加到iShader并编译它
+        GLES20.glShaderSource(iShader, strSource);
+        GLES20.glCompileShader(iShader);
+        //获取编译后着色器句柄存在在compiled数组容器中
+        GLES20.glGetShaderiv(iShader, GLES20.GL_COMPILE_STATUS, compiled, 0);
+        //容错判断
+        if (compiled[0] == 0) {
+            Log.d("Load Shader Failed", "Compilation\n" + GLES20.glGetShaderInfoLog(iShader));
+            return 0;
+        }
+        return iShader;
+    }
+
+    public  int createProgram(Resources res, String vertexRes, String fragmentRes){
+        return loadProgram(loadFromAssetsFile(vertexRes,res),loadFromAssetsFile(fragmentRes,res));
+    }
+
+    public static String loadFromAssetsFile(String fname, Resources res){
+        StringBuilder result=new StringBuilder();
+        try{
+            InputStream is=res.getAssets().open(fname);
+            int ch;
+            byte[] buffer=new byte[1024];
+            while (-1!=(ch=is.read(buffer))){
+                result.append(new String(buffer,0,ch));
+            }
+        }catch (Exception e){
+            return null;
+        }
+        return result.toString().replaceAll("\\r\\n","\n");
+    }
+
 
     /**
      * 回收资源

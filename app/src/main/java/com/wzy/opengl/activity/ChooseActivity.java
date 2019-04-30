@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.wzy.opengl.R;
 import com.wzy.opengl.shape.Ball;
 import com.wzy.opengl.shape.Circle;
+import com.wzy.opengl.shape.ColorFilter;
 import com.wzy.opengl.shape.Cone;
 import com.wzy.opengl.shape.Cube;
 import com.wzy.opengl.shape.Cylinder;
@@ -76,6 +77,7 @@ public class ChooseActivity extends AppCompatActivity {
         add("圆柱", Cylinder.class);
         add("球体", Ball.class);
         add("纹理贴图", Texture.class);
+        add("黑白滤镜", ColorFilter.class);
 //        add("圆柱", Cylinder.class);
 //        add("球体", Ball.class);
 //        add("带光源的球体",BallWithLight.class);
