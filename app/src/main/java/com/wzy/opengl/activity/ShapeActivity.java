@@ -26,7 +26,6 @@ import java.lang.reflect.InvocationTargetException;
 public class ShapeActivity extends AppCompatActivity {
     MyGLSurfaceView mGLView;
     Shape shape ;
-    private static final int REQ_CHOOSE=0x0101;
 
 
     @Override

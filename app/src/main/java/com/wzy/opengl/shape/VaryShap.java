@@ -1,5 +1,5 @@
 package com.wzy.opengl.shape;
- 
+
 import android.opengl.GLES20;
 import android.opengl.Matrix;
 
@@ -18,7 +18,7 @@ import javax.microedition.khronos.opengles.GL10;
  * Blog:https://blog.csdn.net/wzy901213
  * Description:
  */
-public class Cube extends Shape {
+public class VaryShap extends Shape {
 
     private int mProgramId;
 
@@ -33,6 +33,8 @@ public class Cube extends Shape {
     public FloatBuffer vertexBuffer,colorBuffer;
     public ShortBuffer indexBuffer;
 
+    Cube cube;
+
     final float cubePositions[] = {
             -1.0f,1.0f,1.0f,    //正面左上0
             -1.0f,-1.0f,1.0f,   //正面左下1
@@ -46,6 +48,7 @@ public class Cube extends Shape {
 
     //顶点个数
     private final int VERTEX_COUNT = cubePositions.length / COORDS_PER_VERTEX;
+    float ratio;
 
     final short index[]={
             0,3,2,0,2,1,    //正面
@@ -68,10 +71,16 @@ public class Cube extends Shape {
             1f,0f,0f,1f,
     };
 
+    private float[] mMatrixCurrent=     //原始矩阵
+                   {1,0,0,0,
+                    0,1,0,0,
+                    0,0,1,0,
+                    0,0,0,1};
+
 
     //顶点着色器
     public static final String VERTEX_SHADER =
-                    "//根据所设置的顶点数据，插值在光栅化阶段进行\n" +
+            "//根据所设置的顶点数据，插值在光栅化阶段进行\n" +
                     "attribute vec4 vPosition;" +
                     "uniform mat4 vMatrix;"+
                     "varying  vec4 vColor;" +
@@ -85,9 +94,9 @@ public class Cube extends Shape {
 
     //片元着色器
     public static final String FRAGMENT_SHADER =
-                    "//设置float类型默认精度，顶点着色器默认highp，片元着色器需要用户声明\n" +
+            "//设置float类型默认精度，顶点着色器默认highp，片元着色器需要用户声明\n" +
                     "precision mediump float;" +
-                   "//颜色值，varying是从顶点着色器传递过来的\n" +
+                    "//颜色值，varying是从顶点着色器传递过来的\n" +
                     "varying vec4 vColor;" +
                     "void main() {" +
                     "//该片元最终颜色值\n" +
@@ -99,12 +108,13 @@ public class Cube extends Shape {
     private float[] mViewMatrix= new float[16];
     private float[] mMVPMatrix= new float[16];
 
-    public Cube() {
-
+    public VaryShap() {
+        cube=new Cube();
     }
 
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
+        GLES20.glClearColor(1.0f,1.0f,1.0f,1.0f);
         //开启深度测试
         GLES20.glEnable(GLES20.GL_DEPTH_TEST);
 
@@ -150,20 +160,15 @@ public class Cube extends Shape {
     @Override
     public void onSurfaceChanged(GL10 gl, int width, int height) {
         //计算宽高比
-        float ratio=(float)width/height;
-        //设置透视投影
-        Matrix.frustumM(mProjectMatrix, 0, -ratio, ratio, -1, 1, 3, 10);
-        //设置相机位置
-        Matrix.setLookAtM(mViewMatrix, 0, 3, 3, 7.0f, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
-        //设置相机位置
-        //Matrix.setLookAtM(mViewMatrix, 0, 0, 0, 7.0f, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
-        // 计算变换矩阵
-        Matrix.multiplyMM(mMVPMatrix,0,mProjectMatrix,0,mViewMatrix,0);
+        ratio =(float)width/height;
 
     }
 
     @Override
     public void onDrawFrame(GL10 gl) {
+
+        //进行多个绘制
+
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT|GLES20.GL_DEPTH_BUFFER_BIT);
         //告知OpenGL所要使用的Program
         GLES20.glUseProgram(mProgramId);
@@ -181,12 +186,29 @@ public class Cube extends Shape {
                 GLES20.GL_FLOAT, false,
                 0, colorBuffer);
 
+        //设置透视投影
+        Matrix.frustumM(mProjectMatrix, 0, -ratio, ratio, -1, 1, 3, 10);
+
+        //设置相机位置矩阵
+        Matrix.setLookAtM(mViewMatrix, 0, 3, 3, 7.0f, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
+        //设置相机位置
+        //Matrix.setLookAtM(mViewMatrix, 0, 0, 0, 7.0f, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
+        // 计算变换矩阵
+        Matrix.multiplyMM(mMVPMatrix,0,mProjectMatrix,0,mViewMatrix,0);
+
+//        //设置平移矩阵
+        Matrix.translateM(mMatrixCurrent,0,0.5f,0,0);
+        Matrix.scaleM(mMatrixCurrent,0,0.5f,0.5f,0.5f);
+//        Matrix.multiplyMM(mMVPMatrix,0,mMVPMatrix,0,mMatrixCurrent,0);
+//        //设置平移矩阵
+//        Matrix.translateM(mMatrixCurrent,0,1,1,0);
+        Matrix.multiplyMM(mMVPMatrix,0,mMVPMatrix,0,mMatrixCurrent,0);
+//
         //指定vMatrix的值
         GLES20.glUniformMatrix4fv(mMatrixHandler,1,false,mMVPMatrix,0);
 
         //索引法绘制
         GLES20.glDrawElements(GLES20.GL_TRIANGLES,index.length, GLES20.GL_UNSIGNED_SHORT,indexBuffer);
-
 
         //禁用顶点数据
         GLES20.glDisableVertexAttribArray(mPositionId);

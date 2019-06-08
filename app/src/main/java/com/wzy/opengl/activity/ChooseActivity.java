@@ -28,6 +28,7 @@ import com.wzy.opengl.shape.IsoTriangleColorFull;
 import com.wzy.opengl.shape.Square;
 import com.wzy.opengl.shape.Texture;
 import com.wzy.opengl.shape.Triangle;
+import com.wzy.opengl.shape.VaryShap;
 
 import java.util.ArrayList;
 
@@ -78,6 +79,7 @@ public class ChooseActivity extends AppCompatActivity {
         add("球体", Ball.class);
         add("纹理贴图", Texture.class);
         add("黑白滤镜", ColorFilter.class);
+        add("变换", VaryShap.class);
 //        add("圆柱", Cylinder.class);
 //        add("球体", Ball.class);
 //        add("带光源的球体",BallWithLight.class);
