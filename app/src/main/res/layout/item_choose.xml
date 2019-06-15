@@ -5,5 +5,8 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/theme_text_normal"
+        android:padding="@dimen/theme_normal_padding"
+        android:textColor="@color/theme_text_normal"
         android:id="@+id/mName"/>
 </RelativeLayout>

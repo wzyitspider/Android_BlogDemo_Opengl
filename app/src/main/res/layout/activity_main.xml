@@ -1,21 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-    <LinearLayout
+    android:orientation="vertical"
+    tools:context="edu.wzy.opengl.MainActivity">
+    <android.support.v7.widget.RecyclerView android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/mList">
+    </android.support.v7.widget.RecyclerView>
+    <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/mChange"
-            android:onClick="onClick"
-            android:text="切换" />
-    </LinearLayout>
-    <com.wzy.opengl.view.MyGLSurfaceView
+        android:text="@string/type_draw"
+        android:id="@+id/btDraw"
+        android:onClick="onClick" />
+    <Button
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/mGLView"/>
+        android:layout_height="wrap_content"
+        android:text="@string/type_texture"
+        android:id="@+id/btTexture"
+        android:onClick="onClick" />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/type_vary"
+        android:id="@+id/btVary"
+        android:onClick="onClick" />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/type_camera"
+        android:id="@+id/btCamera"
+        android:onClick="onClick" />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/type_animation"
+        android:id="@+id/btAni"
+        android:onClick="onClick" />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/type_fbo"
+        android:id="@+id/btFbo"
+        android:onClick="onClick" />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/type_egl"
+        android:id="@+id/btEgl"
+        android:onClick="onClick" />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/type_obj"
+        android:id="@+id/btObj"
+        android:onClick="onClick" />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/type_obj2"
+        android:id="@+id/btObj2"
+        android:onClick="onClick" />
 </LinearLayout>

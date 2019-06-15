@@ -1,0 +1,16 @@
+attribute vec4 aPosition;//顶点位置
+attribute vec4 aTexCoord;//S T 纹理坐标
+
+uniform mat4 uMatrix;
+uniform mat4 uSTMatrix;
+
+varying vec4 aPos;
+varying vec4 gPosition;
+varying vec2 vTexCoord;
+
+void main() {
+    vTexCoord = (uSTMatrix * aTexCoord).xy;
+    gl_Position = uMatrix * aPosition;
+    aPos= aPosition;
+    gPosition=uMatrix*aPosition;
+}
